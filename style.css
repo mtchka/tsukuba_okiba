@@ -1,0 +1,115 @@
+:root {
+  color-scheme: light;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f5f7fb;
+  color: #1f2937;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  padding: 1rem 1.25rem 0.75rem;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hero h1 {
+  margin: 0 0 0.3rem;
+  font-size: 1.4rem;
+}
+
+.hero p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.mode-btn {
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  color: #111827;
+  border-radius: 999px;
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.mode-btn:hover {
+  background: #eef2ff;
+}
+
+.mode-btn.active {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+#map {
+  position: relative;
+  flex: 1;
+  min-height: 70vh;
+}
+
+.shape-overlay {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  z-index: 1000;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 22px rgba(15, 23, 42, 0.28));
+}
+
+.shape-overlay.is-hidden {
+  display: none;
+}
+
+.shape-overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.map-shape-icon {
+  background: transparent;
+  border: none;
+}
+
+img.map-shape-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  display: block;
+}
+
+.leaflet-control-attribution {
+  font-size: 0.75rem;
+}

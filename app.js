@@ -1,6 +1,6 @@
 /* global L */
 
-const campusCenter = [36.1077, 140.1023];
+const campusCenter = [36.1047, 140.1023];
 
 const map = L.map('map', {
   zoomControl: true,
@@ -24,9 +24,10 @@ if (!mapContainer) {
 const shapeOverlay = document.createElement('div');
 shapeOverlay.className = 'shape-overlay';
 shapeOverlay.innerHTML = '<img src="./tsuku.svg" alt="筑波大学のシルエット" />';
+shapeOverlay.style.opacity = '0.5';
 mapContainer.appendChild(shapeOverlay);
 
-const baseShapeSize = 220;
+const baseShapeSize = 627;
 let baseZoom = map.getZoom();
 
 function createShapeIcon(size) {
@@ -57,7 +58,7 @@ function setOverlayPosition(x, y) {
 }
 
 function setShapeSize(size) {
-  const nextSize = Math.max(64, Math.round(size));
+  const nextSize = Math.round(size);
 
   currentShapeSize = nextSize;
   shapeOverlay.style.width = `${nextSize}px`;
@@ -94,7 +95,7 @@ function applyMode(nextMode) {
   if (mode === 'fixed') {
     fixedLatLng = positionToLatLng();
     fixedLayer.setLatLng(fixedLatLng);
-    fixedLayer.setOpacity(1);
+    fixedLayer.setOpacity(0.5);
     shapeOverlay.classList.add('is-hidden');
   } else {
     fixedLayer.setOpacity(0);
@@ -115,14 +116,9 @@ map.on('zoom', () => {
   updateShapePresentation();
 });
 
-L.marker(campusCenter, {
-  title: '筑波大学',
-})
-  .addTo(map)
-  .bindPopup('筑波大学')
-  .openPopup();
 
-map.fitBounds([[36.09, 140.07], [36.12, 140.13]], { padding: [24, 24] });
+
+//map.fitBounds([[36.09, 140.07], [36.12, 140.13]], { padding: [24, 24] });
 baseZoom = map.getZoom();
 updateShapePresentation();
 applyMode(mode);

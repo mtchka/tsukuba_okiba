@@ -21,7 +21,7 @@ body {
 
 .hero {
   padding: 1rem 1.25rem 0.75rem;
-  background: #fff;
+  background: #f3e9e3;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
@@ -66,9 +66,9 @@ body {
 }
 
 .mode-btn.active {
-  background: #2563eb;
+  background: #d74d74;
   color: #fff;
-  border-color: #2563eb;
+  border-color: #d74d74;
 }
 
 #map {

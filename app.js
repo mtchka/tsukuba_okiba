@@ -63,8 +63,6 @@ const rotationSlider = document.getElementById('rotation-slider');
 const rotationValue = document.getElementById('rotation-value');
 const opacitySlider = document.getElementById('opacity-slider');
 const opacityValue = document.getElementById('opacity-value');
-const menuToggle = document.getElementById('menu-toggle');
-const menu = document.getElementById('menu');
 
 function setOverlayPosition(x, y) {
   overlayPosition = { x, y };
@@ -230,16 +228,11 @@ shapeOverlay.addEventListener('pointerleave', endDrag);
 shapeOverlay.addEventListener('pointercancel', endDrag);
 */
 
-menuToggle.addEventListener('click', () => {
-  const isCollapsed = menu.classList.contains('collapsed');
-  menu.classList.toggle('collapsed');
-  menuToggle.setAttribute('aria-expanded', String(!isCollapsed));
-});
 
 window.addEventListener('resize', () => {
+  map.invalidateSize();
   updateShapePresentation();
 });
-
 map.on('zoom', () => {
   updateShapePresentation();
 });

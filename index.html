@@ -4,46 +4,73 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>つくばおきば | 筑波大学新入生歓迎委員会</title>
+
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin=""
     />
+
     <link rel="stylesheet" href="./style.css" />
   </head>
+
   <body>
     <div id="app">
+
       <div id="map"></div>
-      <header class="hero">
-        <div class="hero-top">
-          <div>
-            <h1>つくばおきば</h1>
-            <p>筑波大学を色々な場所に置いてみよう！</p>
-          </div>
+
+    <div class="title-overlay">
+      <h1>つくばおきば</h1>
+      <p>筑波大学を色々な場所に置いてみよう！</p>
+    </div>
+    
+      <footer class="control-footer">
+
+        <div class="controls" role="toolbar" aria-label="shape mode">
+          <button
+            class="mode-btn active"
+            data-mode="centered"
+            aria-pressed="true"
+          >
+            大学を移動
+          </button>
+
+          <button
+            class="mode-btn"
+            data-mode="fixed"
+            aria-pressed="false"
+          >
+            大学を設置
+          </button>
         </div>
-                  <div class="controls" role="toolbar" aria-label="shape mode">
-            <button class="mode-btn active" data-mode="centered" aria-pressed="true">移動する</button>
-            <button class="mode-btn" data-mode="fixed" aria-pressed="false">置く</button>
-          </div>
-      </header>
-      <div id="menu" class="menu">
-        <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-label="設定をたぐる">
-          <span>☰</span> 設定
-        </button>
-        <div id="menu-content" class="menu-content">
-          <div class="menu-group">
-            <label for="rotation-slider">回転</label>
-            <input type="range" id="rotation-slider" min="-360" max="360" value="0" />
-            <span id="rotation-value">0°</span>
-          </div>
-          <div class="menu-group">
-            <label for="opacity-slider">不透明度</label>
-            <input type="range" id="opacity-slider" min="0" max="100" value="100" />
-            <span id="opacity-value">100%</span>
-          </div>
+
+        <div class="menu-group">
+          <label for="rotation-slider">回転</label>
+          <input
+            type="range"
+            id="rotation-slider"
+            min="-360"
+            max="360"
+            value="0"
+          />
+          <span id="rotation-value">0°</span>
         </div>
-      </div>
+
+        <div class="menu-group">
+          <label for="opacity-slider">不透明度</label>
+          <input
+            type="range"
+            id="opacity-slider"
+            min="0"
+            max="100"
+            value="100"
+          />
+          <span id="opacity-value">100%</span>
+        </div>
+
+      </footer>
+
     </div>
 
     <script
@@ -51,6 +78,7 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
+
     <script src="./app.js"></script>
   </body>
 </html>

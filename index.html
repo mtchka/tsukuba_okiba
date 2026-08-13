@@ -14,19 +14,36 @@
   </head>
   <body>
     <div id="app">
+      <div id="map"></div>
       <header class="hero">
         <div class="hero-top">
           <div>
             <h1>つくばおきば</h1>
-            <p>筑波大学を色々な場所に設置してみよう！</p>
+            <p>筑波大学を色々な場所に置いてみよう！</p>
           </div>
           <div class="controls" role="toolbar" aria-label="shape mode">
-            <button class="mode-btn active" data-mode="centered">画面中央</button>
-            <button class="mode-btn" data-mode="fixed">地図固定</button>
+            <button class="mode-btn active" data-mode="centered" aria-pressed="true">移動する</button>
+            <button class="mode-btn" data-mode="fixed" aria-pressed="false">置く</button>
           </div>
         </div>
       </header>
-      <div id="map"></div>
+      <div id="menu" class="menu">
+        <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-label="設定をたぐる">
+          <span>☰</span> 設定
+        </button>
+        <div id="menu-content" class="menu-content">
+          <div class="menu-group">
+            <label for="rotation-slider">回転</label>
+            <input type="range" id="rotation-slider" min="-360" max="360" value="0" />
+            <span id="rotation-value">0°</span>
+          </div>
+          <div class="menu-group">
+            <label for="opacity-slider">不透明度</label>
+            <input type="range" id="opacity-slider" min="0" max="100" value="100" />
+            <span id="opacity-value">100%</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script

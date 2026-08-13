@@ -14,15 +14,29 @@ body {
 }
 
 #app {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
 .hero {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   padding: 1rem 1.25rem 0.75rem;
-  background: #f3e9e3;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  background: rgba(243, 233, 227, 0);
+  z-index: 100;
+  max-width: 100%;
 }
 
 .hero-top {
@@ -71,22 +85,177 @@ body {
   border-color: #d74d74;
 }
 
-#map {
-  position: relative;
-  flex: 1;
-  min-height: 70vh;
+.menu {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 0.5rem;
+  padding: 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 200;
+  backdrop-filter: blur(4px);
+  min-width: 250px;
+  max-width: 90vw;
 }
+
+.menu-toggle {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #374151;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.menu-toggle:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.menu-toggle span {
+  font-size: 1.2rem;
+}
+
+.menu-content {
+  max-height: 500px;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  opacity: 1;
+  padding: 0 1rem 1rem;
+}
+
+.menu.collapsed .menu-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 1rem;
+}
+
+.menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.menu-group:last-child {
+  margin-bottom: 0;
+}
+
+.menu-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.menu-group input[type="range"] {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #e5e7eb;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.menu-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #d74d74;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.menu-group input[type="range"]::-webkit-slider-thumb:hover {
+  background: #be185d;
+}
+
+.menu-group input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #d74d74;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s;
+}
+
+.menu-group input[type="range"]::-moz-range-thumb:hover {
+  background: #be185d;
+}
+
+.menu-group span {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .menu {
+    bottom: 0.5rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    max-width: none;
+    min-width: auto;
+  }
+
+  .menu.collapsed {
+    min-width: auto;
+  }
+
+  .menu-toggle {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .hero {
+    padding: 0.75rem 1rem 0.5rem;
+  }
+
+  .hero h1 {
+    font-size: 1.1rem;
+  }
+
+  .hero p {
+    font-size: 0.85rem;
+  }
+
+  .controls {
+    gap: 0.3rem;
+  }
+
+  .mode-btn {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.8rem;
+  }
+}
+
 
 .shape-overlay {
   position: absolute;
   width: 220px;
   height: 220px;
   z-index: 1000;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: grab;
+  filter: drop-shadow(0 10px 22px rgba(15, 23, 42, 0.70));
 }
 
 .shape-overlay.is-hidden {
   display: none;
+}
+
+.shape-overlay.is-dragging {
+  cursor: grabbing;
 }
 
 .shape-overlay img {
@@ -99,14 +268,26 @@ body {
 .map-shape-icon {
   background: transparent;
   border: none;
+  padding: 0;
+  margin: 0;
 }
 
-img.map-shape-icon {
+.map-shape-icon .fixed-shape-inner {
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  position: relative;
+}
+
+.map-shape-icon .fixed-shape-inner img {
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  pointer-events: none;
   display: block;
+  pointer-events: none;
 }
 
 .leaflet-control-attribution {

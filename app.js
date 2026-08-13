@@ -1,13 +1,11 @@
 /* global L */
 
-const campusCenter = [36.1047, 140.1023];
+const campusCenter = [36.10381, 140.10250];
 
 const map = L.map('map', {
-  zoomControl: true,
+  zoomControl: false,
   attributionControl: true,
 }).setView(campusCenter, 14);
-
-window.__tsukuMap = map;
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
@@ -24,16 +22,20 @@ if (!mapContainer) {
 const shapeOverlay = document.createElement('div');
 shapeOverlay.className = 'shape-overlay';
 shapeOverlay.innerHTML = '<img src="./tsuku.svg" alt="筑波大学のシルエット" />';
-shapeOverlay.style.opacity = '0.5';
+shapeOverlay.style.opacity = '1';
 mapContainer.appendChild(shapeOverlay);
 
-const baseShapeSize = 627;
+const baseShapeSize = 562.3;
 let baseZoom = map.getZoom();
 
 function createShapeIcon(size) {
-  return L.icon({
-    iconUrl: './tsuku.svg',
+  return L.divIcon({
     className: 'map-shape-icon',
+    html: `
+      <div class="fixed-shape-inner">
+        <img src="./tsuku.svg" alt="筑波大学" />
+      </div>
+    `,
     iconSize: [size, size],
     iconAnchor: [size / 2, size / 2],
   });
@@ -49,12 +51,22 @@ let mode = 'centered';
 let overlayPosition = { x: mapContainer.clientWidth / 2, y: mapContainer.clientHeight / 2 };
 let fixedLatLng = campusCenter;
 let currentShapeSize = baseShapeSize;
+let rotation = 0;
+let opacity = 100;
+let dragState = null;
+
+const rotationSlider = document.getElementById('rotation-slider');
+const rotationValue = document.getElementById('rotation-value');
+const opacitySlider = document.getElementById('opacity-slider');
+const opacityValue = document.getElementById('opacity-value');
+const menuToggle = document.getElementById('menu-toggle');
+const menu = document.getElementById('menu');
 
 function setOverlayPosition(x, y) {
   overlayPosition = { x, y };
   shapeOverlay.style.left = `${x}px`;
   shapeOverlay.style.top = `${y}px`;
-  shapeOverlay.style.transform = 'translate(-50%, -50%)';
+  shapeOverlay.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
 }
 
 function setShapeSize(size) {
@@ -63,7 +75,10 @@ function setShapeSize(size) {
   currentShapeSize = nextSize;
   shapeOverlay.style.width = `${nextSize}px`;
   shapeOverlay.style.height = `${nextSize}px`;
+
   fixedLayer.setIcon(createShapeIcon(nextSize));
+
+  updateFixedLayerTransform();
 }
 
 function updateShapePresentation() {
@@ -88,19 +103,30 @@ function positionToLatLng() {
 
 function applyMode(nextMode) {
   mode = nextMode;
+
   modeButtons.forEach((button) => {
-    button.classList.toggle('active', button.dataset.mode === nextMode);
+    button.classList.toggle(
+      'active',
+      button.dataset.mode === nextMode
+    );
   });
 
   if (mode === 'fixed') {
     fixedLatLng = positionToLatLng();
+
     fixedLayer.setLatLng(fixedLatLng);
-    fixedLayer.setOpacity(0.5);
+    fixedLayer.setOpacity(opacity / 100);
     shapeOverlay.classList.add('is-hidden');
+
+    updateFixedLayerTransform();
   } else {
     fixedLayer.setOpacity(0);
     shapeOverlay.classList.remove('is-hidden');
-    setOverlayPosition(mapContainer.clientWidth / 2, mapContainer.clientHeight / 2);
+
+    setOverlayPosition(
+      mapContainer.clientWidth / 2,
+      mapContainer.clientHeight / 2
+    );
   }
 }
 
@@ -109,16 +135,96 @@ modeButtons.forEach((button) => {
     applyMode(button.dataset.mode);
   });
 });
+
+rotationSlider.addEventListener('input', (event) => {
+  rotation = parseInt(event.target.value);
+  rotationValue.textContent = `${rotation}°`;
+  setOverlayPosition(overlayPosition.x, overlayPosition.y);
+  updateFixedLayerTransform();
+});
+
+opacitySlider.addEventListener('input', (event) => {
+  opacity = parseInt(event.target.value);
+  opacityValue.textContent = `${opacity}%`;
+  shapeOverlay.style.opacity = `${opacity / 100}`;
+  updateFixedLayerTransform();
+});
+
+function updateFixedLayerTransform() {
+  if (!fixedLayer || !fixedLayer._icon) {
+    return;
+  }
+
+  const inner = fixedLayer._icon.querySelector('.fixed-shape-inner');
+
+  if (!inner) {
+    return;
+  }
+
+  inner.style.transform = `rotate(${rotation}deg)`;
+
+  const img = inner.querySelector('img');
+
+  if (img) {
+    img.style.opacity = String(opacity / 100);
+  }
+}
+/*
+function beginDrag(event) {
+  if (mode !== 'centered') {
+    return;
+  }
+
+  dragState = {
+    startX: event.clientX,
+    startY: event.clientY,
+    startOverlayX: overlayPosition.x,
+    startOverlayY: overlayPosition.y,
+  };
+  shapeOverlay.classList.add('is-dragging');
+  event.preventDefault();
+}
+
+function onDrag(event) {
+  if (!dragState || mode !== 'centered') {
+    return;
+  }
+
+  const nextX = dragState.startOverlayX + (event.clientX - dragState.startX);
+  const nextY = dragState.startOverlayY + (event.clientY - dragState.startY);
+  setOverlayPosition(nextX, nextY);
+}
+
+function endDrag() {
+  if (!dragState) {
+    return;
+  }
+
+  dragState = null;
+  shapeOverlay.classList.remove('is-dragging');
+}
+
+shapeOverlay.addEventListener('pointerdown', beginDrag);
+shapeOverlay.addEventListener('pointermove', onDrag);
+shapeOverlay.addEventListener('pointerup', endDrag);
+shapeOverlay.addEventListener('pointerleave', endDrag);
+shapeOverlay.addEventListener('pointercancel', endDrag);
+*/
+
+menuToggle.addEventListener('click', () => {
+  const isCollapsed = menu.classList.contains('collapsed');
+  menu.classList.toggle('collapsed');
+  menuToggle.setAttribute('aria-expanded', String(!isCollapsed));
+});
+
 window.addEventListener('resize', () => {
   updateShapePresentation();
 });
+
 map.on('zoom', () => {
   updateShapePresentation();
 });
 
-
-
-//map.fitBounds([[36.09, 140.07], [36.12, 140.13]], { padding: [24, 24] });
 baseZoom = map.getZoom();
 updateShapePresentation();
 applyMode(mode);

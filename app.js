@@ -25,8 +25,12 @@ shapeOverlay.innerHTML = '<img src="./tsuku.svg" alt="筑波大学のシルエ�
 shapeOverlay.style.opacity = '1';
 mapContainer.appendChild(shapeOverlay);
 
-const baseShapeSize = 562.3;
+const baseShapeSize = 460.1;
 let baseZoom = map.getZoom();
+
+function getLatitudeScale(latitude) {
+  return 1 / Math.cos(latitude * Math.PI / 180);
+}
 
 function createShapeIcon(size) {
   return L.divIcon({
@@ -83,11 +87,19 @@ function setShapeSize(size) {
 
 function updateShapePresentation() {
   const zoomScale = map.getZoomScale(map.getZoom(), baseZoom);
-  setShapeSize(baseShapeSize * zoomScale);
+  
+  let latitudeScale = 1;
+
 
   if (mode === 'centered') {
+    latitudeScale = getLatitudeScale(map.getCenter().lat);
+    const size = baseShapeSize * zoomScale * latitudeScale;
+    setShapeSize(size);
     setOverlayPosition(mapContainer.clientWidth / 2, mapContainer.clientHeight / 2);
   } else {
+    latitudeScale = getLatitudeScale(fixedLatLng.lat);
+    const size = baseShapeSize * zoomScale * latitudeScale;
+    setShapeSize(size);
     updateOverlayFromMap();
   }
 }
@@ -116,6 +128,7 @@ function applyMode(nextMode) {
 
     fixedLayer.setLatLng(fixedLatLng);
     fixedLayer.setOpacity(opacity / 100);
+    
     shapeOverlay.classList.add('is-hidden');
 
     updateFixedLayerTransform();
@@ -147,6 +160,12 @@ opacitySlider.addEventListener('input', (event) => {
   opacity = parseInt(event.target.value);
   opacityValue.textContent = `${opacity}%`;
   shapeOverlay.style.opacity = `${opacity / 100}`;
+
+  if (mode === 'fixed') {
+    fixedLayer.setOpacity(opacity / 100);
+  }
+
+
   updateFixedLayerTransform();
 });
 
@@ -222,6 +241,10 @@ window.addEventListener('resize', () => {
 });
 
 map.on('zoom', () => {
+  updateShapePresentation();
+});
+
+map.on('move', () => {
   updateShapePresentation();
 });
 

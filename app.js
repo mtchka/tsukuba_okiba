@@ -179,12 +179,6 @@ function updateFixedLayerTransform() {
   }
 
   inner.style.transform = `rotate(${rotation}deg)`;
-
-  const img = inner.querySelector('img');
-
-  if (img) {
-    img.style.opacity = String(opacity / 100);
-  }
 }
 /*
 function beginDrag(event) {

@@ -1,6 +1,6 @@
 /* global L */
 
-const campusCenter = [36.10381, 140.10250];
+const campusCenter = [36.10383, 140.1002743];
 
 const map = L.map('map', {
   zoomControl: false,
@@ -25,7 +25,7 @@ shapeOverlay.innerHTML = '<img src="./tsuku.svg" alt="筑波大学のシルエ�
 shapeOverlay.style.opacity = '1';
 mapContainer.appendChild(shapeOverlay);
 
-const baseShapeSize = 460.1;
+const baseShapeSize = 454.3;
 let baseZoom = map.getZoom();
 
 function getLatitudeScale(latitude) {

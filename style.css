@@ -289,12 +289,9 @@ body {
   display: block;
 }
 
-.map-shape-icon {
-  background: transparent;
-  border: none;
-  pointer-events: none;
-  padding: 0;
-  margin: 0;
+.map-shape-icon,
+.map-shape-icon * {
+  pointer-events: none !important;
 }
 
 .map-shape-icon .fixed-shape-inner {

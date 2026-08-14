@@ -238,3 +238,14 @@ map.on('move', () => {
 baseZoom = map.getZoom();
 updateShapePresentation();
 applyMode(mode);
+
+const footer = document.querySelector('.control-footer');
+const modeControls = document.querySelector('.mode-controls');
+
+function updateModeControlsPosition() {
+  const footerHeight = footer.offsetHeight;
+  modeControls.style.bottom = `${footerHeight + 12}px`;
+}
+
+window.addEventListener('resize', updateModeControlsPosition);
+updateModeControlsPosition();

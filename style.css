@@ -80,15 +80,31 @@ body {
   color: #4b5563;
 }
 
+.mode-controls {
+  position: absolute;
+  left: 1rem;
+  z-index: 400;
+
+  display: flex;
+  gap: 0.5rem;
+}
+
 .mode-btn {
+  width: 80px;
+  height: 80px;
+
   border: 1px solid #d1d5db;
   background: #f9fafb;
   color: #111827;
-  border-radius: 999px;
-  padding: 0.45rem 0.8rem;
+  border-radius: 50%;
+
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+  font-size: 1rem;
 }
 
 .mode-btn:hover {
@@ -115,7 +131,9 @@ body {
 .menu-group label {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #374151;
+  width: 4em;
+  text-align: right;
+  color: #d1d5db;
 }
 
 .menu-group input[type="range"] {
@@ -171,10 +189,9 @@ body {
   justify-content: center;
   gap: 1.5rem;
 
-  padding: 1.2rem 1rem;
+  padding: 1rem 1rem;
 
   background: #f3e9e3;
-  backdrop-filter: blur(4px);
 }
 
 .control-footer .controls {
@@ -182,6 +199,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
+  margin: 0.3rem;
   flex-wrap: nowrap;
 }
 
@@ -225,7 +243,7 @@ body {
 
   .mode-btn {
     padding: 0.35rem 0.6rem;
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 
   .control-footer {

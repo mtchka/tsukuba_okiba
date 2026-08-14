@@ -49,6 +49,7 @@ const fixedLayer = L.marker(campusCenter, {
   icon: createShapeIcon(baseShapeSize),
   title: '筑波大学',
   opacity: 0,
+  interactive: false,
 }).addTo(map);
 
 let mode = 'centered';

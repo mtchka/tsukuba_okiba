@@ -25,13 +25,6 @@
       <p>筑波大学を色々な場所に置いてみよう！</p>
     </div>
 
-    <a
-      href="https://www.stb.tsukuba.ac.jp/~shinkan/"
-      class="svg-button"
-      aria-label="リンク先へ移動"
-    >
-      <img src="./shinkancomm_logo_full.svg" alt="" />
-    </a>
 
     
     <div class="mode-controls">
@@ -45,33 +38,45 @@
       </button>
     </div>
 
+        <a
+        href="https://www.stb.tsukuba.ac.jp/~shinkan/"
+        class="svg-button"
+        aria-label="リンク先へ移動"
+      >
+        <img src="./shinkancomm_logo_full.svg" alt="" />
+      </a>
+
 
 
       <footer class="control-footer">
 
-        <div class="menu-group">
-          <label for="rotation-slider">回転</label>
-          <input
-            type="range"
-            id="rotation-slider"
-            min="-360"
-            max="360"
-            value="0"
-          />
-          <span id="rotation-value">0°</span>
-        </div>
+        <div class="controls">
+          
+          <div class="menu-group">
+            <label for="rotation-slider">回転</label>
+            <input
+              type="range"
+              id="rotation-slider"
+              min="-360"
+              max="360"
+              value="0"
+            />
+            <span id="rotation-value">0°</span>
+          </div>
 
-        <div class="menu-group">
-          <label for="opacity-slider">不透明度</label>
-          <input
-            type="range"
-            id="opacity-slider"
-            min="0"
-            max="100"
-            value="100"
-          />
-          <span id="opacity-value">100%</span>
-        </div>
+          <div class="menu-group">
+            <label for="opacity-slider">不透明度</label>
+            <input
+              type="range"
+              id="opacity-slider"
+              min="0"
+              max="100"
+              value="100"
+            />
+            <span id="opacity-value">100%</span>
+          </div>
+
+      </div>
 
       </footer>
 

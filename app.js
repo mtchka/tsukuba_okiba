@@ -12,7 +12,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors',
 }).addTo(map);
 
-const modeButtons = Array.from(document.querySelectorAll('.mode-btn'));
+const modeToggle = document.getElementById('mode-toggle');
 const mapContainer = document.getElementById('map');
 
 if (!mapContainer) {
@@ -115,20 +115,18 @@ function positionToLatLng() {
 function applyMode(nextMode) {
   mode = nextMode;
 
-  modeButtons.forEach((button) => {
-    button.classList.toggle(
-      'active',
-      button.dataset.mode === nextMode
-    );
-  });
-
   if (mode === 'fixed') {
     fixedLatLng = positionToLatLng();
 
     fixedLayer.setLatLng(fixedLatLng);
     fixedLayer.setOpacity(opacity / 100);
-    
     shapeOverlay.classList.add('is-hidden');
+
+    modeToggle.querySelector('img').src = './put.svg';
+    modeToggle.setAttribute(
+      'aria-label',
+      '移動モードに切り替える'
+    );
 
     updateFixedLayerTransform();
   } else {
@@ -139,15 +137,22 @@ function applyMode(nextMode) {
       mapContainer.clientWidth / 2,
       mapContainer.clientHeight / 2
     );
+
+    modeToggle.querySelector('img').src = './move.svg';
+    modeToggle.setAttribute(
+      'aria-label',
+      '設置モードに切り替える'
+    );
   }
 }
 
-modeButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    applyMode(button.dataset.mode);
-  });
+modeToggle.addEventListener('click', () => {
+  applyMode(
+    mode === 'centered'
+      ? 'fixed'
+      : 'centered'
+  );
 });
-
 rotationSlider.addEventListener('input', (event) => {
   rotation = parseInt(event.target.value);
   rotationValue.textContent = `${rotation}°`;

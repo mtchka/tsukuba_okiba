@@ -24,19 +24,26 @@
       <h1>つくばおきば</h1>
       <p>筑波大学を色々な場所に置いてみよう！</p>
     </div>
+
+    <a
+      href="https://www.stb.tsukuba.ac.jp/~shinkan/"
+      class="svg-button"
+      aria-label="リンク先へ移動"
+    >
+      <img src="./shinkancomm_logo_full.svg" alt="" />
+    </a>
+
     
-      <div class="mode-controls" role="toolbar" aria-label="shape mode"> 
-          <button
-            class="mode-btn active"
-            data-mode="centered"
-            aria-pressed="true"
-          >動かす</button>
-          <button
-            class="mode-btn"
-            data-mode="fixed"
-            aria-pressed="false"
-          >置く</button>
-        </div>
+    <div class="mode-controls">
+      <button
+        id="mode-toggle"
+        class="mode-btn"
+        type="button"
+        aria-label="設置モードに切り替える"
+      >
+        <img src="./move.svg" alt="" />
+      </button>
+    </div>
 
 
 
@@ -64,16 +71,6 @@
             value="100"
           />
           <span id="opacity-value">100%</span>
-        </div>
-
-        <div class="menu-group">
-        <a
-          href="https://www.stb.tsukuba.ac.jp/~shinkan/"
-          class="svg-button"
-          aria-label="リンク先へ移動"
-        >
-          <img src="./shinkancomm_logo_full.svg" alt="" />
-        </a>
         </div>
 
       </footer>

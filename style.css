@@ -24,7 +24,7 @@ body {
   overflow: hidden;
 
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: minmax(0, 1fr) auto;
 }
 
 #map {
@@ -34,37 +34,10 @@ body {
   min-height: 0;
 
   z-index: 0;
+
+  touch-action: none;
 }
 
-.hero {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 1rem 1.25rem 0.75rem;
-  background: rgba(243, 233, 227, 0);
-  z-index: 100;
-  max-width: 100%;
-}
-
-.hero-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.hero h1 {
-  margin: 0 0 0.3rem;
-  font-size: 1.4rem;
-}
-
-.hero p {
-  margin: 0;
-  font-size: 0.95rem;
-  color: #4b5563;
-}
 
 
 .title-overlay {
@@ -215,7 +188,6 @@ body {
 }
 
 .controls {
-  size: 100%;
   display: flex;
   align-items: center;
 }
@@ -241,17 +213,6 @@ body {
 @media (max-width: 768px) {
 
 
-  .hero {
-    padding: 0.75rem 1rem 0.5rem;
-  }
-
-  .hero h1 {
-    font-size: 1.1rem;
-  }
-
-  .hero p {
-    font-size: 0.85rem;
-  }
 
   .controls {
     gap: 0.3rem;
